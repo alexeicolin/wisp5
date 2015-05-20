@@ -1,0 +1,11 @@
+# Augo-generated build directories
+Math/
+RFID/
+Sensors/
+Timing/
+internals/
+nvm/
+rand/
+wired/
+
+*.lib
