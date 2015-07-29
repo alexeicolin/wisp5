@@ -13,14 +13,14 @@
  * State variables for the UART module
  */
 typedef struct {
-    volatile uint8_t isTxBusy; // Is the module currently in the middle of a transmit operation?
-    volatile uint8_t* txPtr; // Pointer to the next byte to be transmitted
-    volatile uint16_t txBytesRemaining; // Number of bytes left to send
+    uint8_t isTxBusy; // Is the module currently in the middle of a transmit operation?
+    uint8_t* txPtr; // Pointer to the next byte to be transmitted
+    uint16_t txBytesRemaining; // Number of bytes left to send
 
-    volatile uint8_t isRxBusy; // Is the module currently in the middle of a receive operation?
-    volatile uint8_t* rxPtr; // Pointer to the next byte to be received
-    volatile uint16_t rxBytesRemaining; // Maximum number of bytes left to receive
-    volatile uint8_t rxTermChar; // Stop receiving on this char.
+    uint8_t isRxBusy; // Is the module currently in the middle of a receive operation?
+    uint8_t* rxPtr; // Pointer to the next byte to be received
+    uint16_t rxBytesRemaining; // Maximum number of bytes left to receive
+    uint8_t rxTermChar; // Stop receiving on this char.
 } uart_sm_t;
 
 static volatile uart_sm_t UART_SM;
