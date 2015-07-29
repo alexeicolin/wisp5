@@ -241,7 +241,6 @@ void __attribute__ ((interrupt(USCI_A0_VECTOR))) USCI_A0_ISR (void)
 #error Compiler not supported!
 #endif
 {
-    BITTOG(PLED2OUT, PIN_LED2);
     uint8_t rec;
 
     switch (__even_in_range(UCA0IV, USCI_UART_UCTXCPTIFG)) {
