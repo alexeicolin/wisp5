@@ -234,7 +234,6 @@ uint8_t UART_isRxDone() {
  */
 #pragma vector=USCI_A0_VECTOR
 __interrupt void USCI_A0_ISR(void) {
-    BITTOG(PLED2OUT, PIN_LED2);
     uint8_t rec;
 
     switch (__even_in_range(UCA0IV, USCI_UART_UCTXCPTIFG)) {
