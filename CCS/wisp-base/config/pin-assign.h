@@ -34,6 +34,7 @@
 // P1.4 - AUX3 -  INPUT/OUTPUT
 #define		PIN_AUX3			(BIT4)
 #define 	PAUX3IN				(P1IN)
+#define 	PAUX3OUT			(P1OUT)
 #define 	PDIR_AUX3			(P1DIR)
 #define		PAUX3SEL0			(P1SEL0)
 #define		PAUX3SEL1			(P1SEL1)
