@@ -41,9 +41,30 @@ void UART_init(void) {
     // Fractional portion = 0.083
     // User's Guide Table 21-4: UCBRSx = 0x04
     // UCBRFx = int ( (52.083-52)*16) = 1
+
+#define UART_BAUDRATE 9600
+//#define UART_BAUDRATE 115200
+
+//#define UART_CLOCK 1000000
+#define UART_CLOCK 4000000
+
+#if UART_CLOCK == 1000000
+#if UART_BAUDRATE == 9600
     UCA0BR0 = 52;                             // 8000000/16/9600
     UCA0BR1 = 0x00;
     UCA0MCTLW |= UCOS16 | UCBRF_1;
+#endif // UART_BAUDRATE
+#elif UART_CLOCK == 4000000
+#if UART_BAUDRATE == 9600
+    UCA0BR0 = 26;                             // 8000000/16/9600
+    UCA0BR1 = 0;
+    UCA0MCTLW |= UCOS16 | 0xB6;
+#elif UART_BAUDRATE == 115200
+    UCA0BR0 = 4;
+    UCA0BR1 = 0;
+    UCA0MCTLW |= UCOS16 | 0x55;
+#endif // UART_BAUDRATE
+#endif // UART_CLOCK
 
     PUART_TXSEL0 &= ~PIN_UART_TX; // TX pin to UART module
     PUART_TXSEL1 |= PIN_UART_TX;
