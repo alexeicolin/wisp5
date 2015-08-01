@@ -98,16 +98,16 @@ void UART_asyncSend(uint8_t* txBuf, uint16_t size) {
     // Set up for start of transmission
     UART_SM.isTxBusy = TRUE;
     UART_SM.txPtr = txBuf;
-    UART_SM.txBytesRemaining = size - 1;
+    UART_SM.txBytesRemaining = size;
 
-    UCA0IFG &= ~(USCI_UART_UCTXIFG); // Clear byte completion flag
+    UCA0IFG &= ~(USCI_UART_UCTXIFG); // Clear the 'ready to accept byte' flag
 
-    UCA0IE |= UCTXIE; // Enable USCI_A0 TX interrupt
-    UCA0TXBUF = *(UART_SM.txPtr++); // Load in first byte
+    UCA0IE |= UCTXIE; // Enable USCI_A0 TX interrupt ('ready to accept byte')
+    //UCA0TXBUF = *(UART_SM.txPtr++); // Load in first byte
 
-    // The rest of the transmission will be completed by the TX ISR (which
-    //  will wake after each byte has been transmitted), and the isBusy flag
-    //  will be cleared when done.
+    // The bytes are transmitted in the TX ISR (which is called whenever the
+    // UART is ready to accept a byte), and the isBusy flag is cleared when the
+    // last byte has *finished* transmitting.
 }
 
 /**
@@ -278,9 +278,10 @@ __interrupt void USCI_A0_ISR(void) {
 
         break;
     case USCI_UART_UCTXIFG:
-        if (UART_SM.txBytesRemaining--) {
-            UCA0TXBUF = *(UART_SM.txPtr++);
-        } else {
+        UCA0TXBUF = *(UART_SM.txPtr++); // if interrupt was enabled, there must be bytes
+        if (--UART_SM.txBytesRemaining == 0) {
+            // TODO: actually, this wait should probably happen for blocking version only
+            while (UCA0STATW & UCBUSY); // wait for last byte to finish transmitting
             UCA0IE &= ~(UCTXIE); // Disable USCI_A0 TX interrupt
             UART_SM.isTxBusy = FALSE;
         }
