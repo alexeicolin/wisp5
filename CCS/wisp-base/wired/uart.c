@@ -42,8 +42,8 @@ void UART_init(void) {
     // User's Guide Table 21-4: UCBRSx = 0x04
     // UCBRFx = int ( (52.083-52)*16) = 1
 
-#define UART_BAUDRATE 9600
-//#define UART_BAUDRATE 115200
+//#define UART_BAUDRATE 9600
+#define UART_BAUDRATE 115200
 
 //#define UART_CLOCK 1000000
 #define UART_CLOCK 4000000
