@@ -52,17 +52,17 @@ void UART_init(void) {
 #if UART_BAUDRATE == 9600
     UCA0BR0 = 52;                             // 8000000/16/9600
     UCA0BR1 = 0x00;
-    UCA0MCTLW |= UCOS16 | UCBRF_1;
+    UCA0MCTLW = UCOS16 | UCBRF_1;
 #endif // UART_BAUDRATE
 #elif UART_CLOCK == 4000000
 #if UART_BAUDRATE == 9600
     UCA0BR0 = 26;                             // 8000000/16/9600
     UCA0BR1 = 0;
-    UCA0MCTLW |= UCOS16 | 0xB6;
+    UCA0MCTLW = UCOS16 | (0xB6 << 8);
 #elif UART_BAUDRATE == 115200
-    UCA0BR0 = 4;
+    UCA0BR0 = 2;
     UCA0BR1 = 0;
-    UCA0MCTLW |= UCOS16 | 0x55;
+    UCA0MCTLW = UCOS16 | UCBRF_2 | (0xBB << 8);
 #endif // UART_BAUDRATE
 #endif // UART_CLOCK
 
